@@ -1,0 +1,74 @@
+B2 - Stumpers
+B-CPE-210
+Boggle
+Duo Stumper
+
+---------
+
+Boggle
+
+---------
+
+binary name:		boggle
+repository name:	CPE_duostumper_$STUMPERNUMBER_$ACADEMICYEAR
+repository rights:	ramassage-tek
+language:			C
+compilation:		via Makefile, including re, clean and fclean rules
+
+• Your repository must contain the totality of your source files, but no useless files (binary, temp files, obj files,...).
+
+• Error messages have to be written on the error output, and the program should then exit with the 84 error code (0 if there is no error).
+
+The $STUMPERNUMBER is always on one digit: 1 , 2 , . . .
+
+For this project, the only authorized functions are those of the standard libC.
+
+Boggle is a game that is made up of a grid of arranged letters among ‘abcdefghijklmnopqrstuvwxyz’.
+The goal is to find words within this grid. In order to validate a word, the letters must be side to side to one another.
+
+A letter cannot be used more than once in a word.
+
+Your program must look for a word, entered on the standart input, within such a grid.
+If found, the grid must be displayed with the word in capital letters; otherwise, an error message must be displayed.
+
+Usage:		./boggle -g GRID [-s SIZE] [-w WORD]
+-s SIZE defines the size of a side of the grid (def: 4)
+-g GRID specifies a hard-coded grid (MANDATORY). If the grid does not contain the correct number of characters, you must display an error.
+-w WORD force the word to be looked for.
+
+---------
+
+∼/B-CPE-210> ./boggle -g “lqnelooelbtelqte”
++++++++++++
+| l q n e |
+| l o o e |
+| l b t e |
+| l q t e |
++++++++++++
+> stem
+The word “stem” is not in the grid.
+> noob
++++++++++++
+| l q N e |
+| l O O e |
+| l B t e |
+| l q t e |
++++++++++++
+∼/B-CPE-210> ./boggle -g “lqnelooelbtelqte” -w stem
+The word “stem” is not in the grid.
+∼/B-CPE-210> ./boggle -g “lqnelooelbtelqte” -w noob
++++++++++++
+| l q N e |
+| l O O e |
+| l B t e |
+| l q t e |
++++++++++++
+∼/B-CPE-210> echo “stem” | ./boggle -g “lqnelooelbtelqte”; echo $?
++++++++++++
+| l q n e |
+| l o o e |
+| l b t e |
+| l q t e |
++++++++++++
+> The word “stem” is not in the grid.
+> 0

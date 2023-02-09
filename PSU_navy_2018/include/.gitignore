@@ -1,0 +1,4 @@
+test.c
+libmy.a
+a.out
+*.o

@@ -1,0 +1,6 @@
+.vscode
+*.o
+corewar
+test.cor
+example.cor
+notes

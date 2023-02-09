@@ -1,0 +1,207 @@
+function : live (1 arguments)  //live %2
+    5 bits :
+        1 type (1)
+        3 empty
+        1 value (index : %)
+
+function : ld (2 arguments)   //ld %2, r1  || ld 2, r1
+    7 bits : (first value = index : %)
+        1 type (2)
+        1 spécificity (90) //Parce que 1 IND (%2), puis un r (r1) ==> 10 01 00 00 ==> 90 en hexa
+        3 empty
+        1 value (index : %)
+        1 value (registers : r)
+    5 bits : (first value = index : /= %)
+        1 type (2)
+        1 spécificity (d0) // parce que 1 dir (2), puis un r (r1) ==> 11 01 00 00 ==> D0 en hexa
+        1 empty
+        1 value (index : /= %)
+        1 value (registers : r)
+    
+function : st (2 arguments)   //st r1, r2  ||  st r1, 1
+    4 bits : (second value = registers : r)
+        1 type (3)
+        1 spécificity (50) //Parce que un r puis un r ==> 01 01 00 00 ==> 50 en hexa
+        1 value (registers : r)
+        1 value (registers : r)
+    5 bits : (second value = index : /= %)
+        1 type (3)
+        1 spécificity (70) //parce que un r puis un dir ==> 01 11 00 00 ==> 70 en hexa
+        1 value (registers : r)
+        1 empty
+        1 value (index : /= %)
+
+function : add (3 arguments)   //add r1, r2, r3
+    5 bits : (all value = registers : r)
+        1 type (4)
+        1 spécificity (54) //Parce que 1r puis 1r puis 1r ==> 01 01 01 00 ==> 54
+        1 value (registers : r)
+        1 value (registers : r)
+        1 value (registers : r)
+
+function : sub (3 arguments)   //sub r1, r2, r3
+    5 bits : (all value = registers : r)
+        1 type (5)
+        1 spécificity (54) //Parce que 1r puis 1r puis 1r ==> 01 01 01 00 ==> 54
+        1 value (registers : r)
+        1 value (registers : r)
+        1 value (registers : r)
+
+function : and (3 arguments)   //and r1, r2, r3  ||  and (%1, 1), r2, r3  ||  and r1, (%1, 1), r3  ||  and (%1, 1), (%1, 1), r3
+    5 bits : (all value = registers : r)
+        1 type (6)
+        1 spécificity (54) //Parce que 1r puis 1r puis 1r ==> 01 01 01 00 ==> 54
+        1 value (registers : r)
+        1 value (registers : r)
+        1 value (registers : r)
+    6-8 bits : (first value = index : (% | /= %), 2-3 value = registers : r)
+        1 type (6)
+        1 spécificity (94 - d4) //Parce que 
+        (3 - 1) empty
+        1 value (index : (% | /= %))
+        1 value (registers : r)
+        1 value (registers : r)
+    6-8 bits : (second value = index : (% | /= %), 1-3 value = registers : r)
+        1 type (6)
+        1 spécificity (64 - 74)
+        1 value (index : (% | /= %))
+        (3 - 1) empty
+        1 value (registers : r)
+        1 value (registers : r)
+    8-11 bits : (second value = index : (% | /= %), 1-3 value = registers : r)
+        1 type (6)
+        1 spécificity ((a4 - b4 - e4 - f4))
+        1 value (index : (% | /= %))
+        (3 - 1) empty
+        1 value (index : (% | /= %))
+        (3 - 1) empty
+        1 value (registers : r)
+
+function : or (3 arguments)   //or r1, r2, r3  ||  or (%1, 1), r2, r3  ||  or r1, (%1, 1), r3  ||  or (%1, 1), (%1, 1), r3
+    5 bits : (all value = registers : r)
+        1 type (7)
+        1 spécificity (54) //Parce que 1r puis 1r puis 1r ==> 01 01 01 00 ==> 54
+        1 value (registers : r)
+        1 value (registers : r)
+        1 value (registers : r)
+    6-8 bits : (first value = index : (% | /= %), 2-3 value = registers : r)
+        1 type (7)
+        1 spécificity (94 - d4)
+        (3 - 1) empty
+        1 value (index : (% | /= %))
+        1 value (registers : r)
+        1 value (registers : r)
+    6-8 bits : (second value = index : (% | /= %), 1-3 value = registers : r)
+        1 type (7)
+        1 spécificity (64 - 74)
+        1 value (index : (% | /= %))
+        (3 - 1) empty
+        1 value (registers : r)
+        1 value (registers : r)
+    8-11 bits : (second value = index : (% | /= %), 1-3 value = registers : r)
+        1 type (7)
+        1 spécificity ((a4 - b4 - e4 - f4))
+        1 value (index : (% | /= %))
+        (3 - 1) empty
+        1 value (index : (% | /= %))
+        (3 - 1) empty
+        1 value (registers : r)
+
+function : xor (3 arguments)   //xor r1, r2, r3  ||  xor (%1, 1), r2, r3  ||  xor r1, (%1, 1), r3  ||  xor (%1, 1), (%1, 1), r3
+    5 bits : (all value = registers : r)
+        1 type (8)
+        1 spécificity (54) //Parce que 1r puis 1r puis 1r ==> 01 01 01 00 ==> 54
+        1 value (registers : r)
+        1 value (registers : r)
+        1 value (registers : r)
+    6-8 bits : (first value = index : (% | /= %), 2-3 value = registers : r)
+        1 type (8)
+        1 spécificity (94 - d4)
+        (3 - 1) empty
+        1 value (index : (% | /= %))
+        1 value (registers : r)
+        1 value (registers : r)
+    6-8 bits : (second value = index : (% | /= %), 1-3 value = registers : r)
+        1 type (8)
+        1 spécificity (64 - 74)
+        1 value (index : (% | /= %))
+        (3 - 1) empty
+        1 value (registers : r)
+        1 value (registers : r)
+    8-11 bits : (second value = index : (% | /= %), 1-3 value = registers : r)
+        1 type (8)
+        1 spécificity ((a4 - b4 - e4 - f4))
+        1 value (index : (% | /= %))
+        (3 - 1) empty
+        1 value (index : (% | /= %))
+        (3 - 1) empty
+        1 value (registers : r)
+
+function : zjmp (1 arguments)   //zjmp %1
+    3 bits : (first value = index : %)
+        1 type (9)
+        1 empty
+        1 value (index : %)
+
+function : ldi (3 arguments)   //ldi (%1, 1, r1), (%2, r2), r3
+    5-7 bits : (1-2 value = index : (% | /= %), third value = registers : r)
+        1 type (a)
+        1 spécificity ((54 - 64 - 94 - a4 - d4 - e4))
+        1 empty (first value != registers)
+        1 value (index : (% | /= %) | registers : r)
+        1 empty (second value != registers)
+        1 value (index : % | registers : r)
+        1 value (registers : r)
+
+function : sti (3 arguments)   //sti r1, (%2, 2, r2), (%3, r3)
+    5-7 bits : (first value = registers : r, 2-3 value = index : (% | /= %))
+        1 type (b)
+        1 spécificity ((54 - 58 - 64 - 68 - 74))
+        1 value (registers : r)
+        1 empty (second value != registers)
+        1 value (index : (% | /= %) | registers : r)
+        1 empty (third value != registers)
+        1 value (index : % | registers : r)
+
+
+function : fork (1 arguments)   //fork %1
+    3 bits :
+        1 type (c)
+        1 empty
+        1 value (index : %)
+
+function : lld (2 arguments)   //lld %2, r1  || ld 2, r1  (like ld)
+    7 bits : (first value = index : %)
+        1 type (d)
+        1 spécificity (90) //Parce que 1 IND puis un r ==> 10 01 00 00 ==> 90
+        3 empty
+        1 value (index : %)
+        1 value (registers : r)
+    5 bits : (first value = index : /= %)
+        1 type (d)
+        1 spécificity (d0) ==> parce que 1 DIR puis un r ==> 11 01 00 00 ==> D0
+        1 empty
+        1 value (index : /= %)
+        1 value (registers : r) 
+
+function : lldi (3 arguments)   //lldi (%1, 1, r1), (%2, r2), r3   (like ldi)
+    5-7 bits : (1-2 value = index : (% | /= %), third value = registers : r)
+        1 type (e)
+        1 spécificity ((54 - 64 - 94 - a4 - d4 - e4))
+        1 empty (first value != registers)
+        1 value (index : (% | /= %) | registers : r)
+        1 empty (second value != registers)
+        1 value (index : % | registers : r)
+        1 value (registers : r)
+
+function : lfork (1 arguments)   //fork %1   (like fork)
+    3 bits :
+        1 type (f)
+        1 empty
+        1 value (index : %)
+
+function : aff (1 arguments)   //fork r1
+    3 bits :
+        1 type (10)
+        1 spécificity (40) //parce que 1r ==> 01 00 00 00 ==> 40 en hexa
+        1 value (registers : r)
